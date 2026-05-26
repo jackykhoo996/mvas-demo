@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Premium Videos</title>
+  <title>MVAS PIN FLOW</title>
 </head>
 
 <body>
 
-<h1>Watch Premium Videos</h1>
+  <h1>Watch Premium Videos</h1>
 
-<!-- phone -->
-<input
-  type="text"
-  id="msisdn"
-  placeholder="Enter Mobile Number"
-/>
-
-<button onclick="sendPin()">
-  Continue
-</button>
-
-<br><br>
-
-<!-- otp -->
-<div id="otpBox" style="display:none;">
-
+  <!-- phone input -->
   <input
-    type="text"
-    id="pin"
-    placeholder="Enter OTP"
-  />
+    id="msisdn"
+    placeholder="Enter Phone Number"
+  >
 
-  <button onclick="verifyPin()">
-    Verify OTP
+  <button onclick="sendPIN()">
+    Continue
   </button>
 
-</div>
+  <!-- otp box -->
+  <div
+    id="otpBox"
+    style="display:none; margin-top:20px;"
+  >
+
+    <input
+      id="otp"
+      placeholder="Enter OTP"
+    >
+
+    <button onclick="verifyOTP()">
+      Verify OTP
+    </button>
+
+  </div>
 
 <script>
 
-let currentTxid = "";
+let currentTxid = null;
 
-async function sendPin(){
+// SEND PIN
+async function sendPIN(){
 
   const msisdn =
     document.getElementById('msisdn').value;
@@ -55,7 +54,7 @@ async function sendPin(){
     },
 
     body:JSON.stringify({
-      msisdn
+      msisdn:msisdn
     })
 
   });
@@ -67,19 +66,19 @@ async function sendPin(){
   // save txid
   currentTxid = data.txid;
 
-  // show otp input
+  // show otp box
   document
     .getElementById('otpBox')
     .style.display = 'block';
 
-  alert("OTP Sent");
-
 }
 
-async function verifyPin(){
 
-  const pin =
-    document.getElementById('pin').value;
+// VERIFY OTP
+async function verifyOTP(){
+
+  const otp =
+    document.getElementById('otp').value;
 
   const response = await fetch('/api/verify-pin',{
 
@@ -90,8 +89,11 @@ async function verifyPin(){
     },
 
     body:JSON.stringify({
-      txid: currentTxid,
-      pin: pin
+
+      txid:currentTxid,
+
+      pin:otp
+
     })
 
   });
@@ -106,7 +108,7 @@ async function verifyPin(){
 
   } else {
 
-    alert("OTP Failed");
+    alert("Wrong OTP");
 
   }
 
