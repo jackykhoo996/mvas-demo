@@ -1,27 +1,52 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+  <title>Premium Videos</title>
+</head>
+
 <body>
 
 <h1>Watch Premium Videos</h1>
 
+<!-- phone -->
 <input
- type="text"
- id="msisdn"
- placeholder="Enter Mobile Number">
+  type="text"
+  id="msisdn"
+  placeholder="Enter Mobile Number"
+/>
 
-<button onclick="submitForm()">
-Continue
+<button onclick="sendPin()">
+  Continue
 </button>
+
+<br><br>
+
+<!-- otp -->
+<div id="otpBox" style="display:none;">
+
+  <input
+    type="text"
+    id="pin"
+    placeholder="Enter OTP"
+  />
+
+  <button onclick="verifyPin()">
+    Verify OTP
+  </button>
+
+</div>
 
 <script>
 
-async function submitForm(){
+let currentTxid = "";
+
+async function sendPin(){
 
   const msisdn =
     document.getElementById('msisdn').value;
 
-  const response = await fetch('/api/send-pin', {
+  const response = await fetch('/api/send-pin',{
 
     method:'POST',
 
@@ -37,7 +62,53 @@ async function submitForm(){
 
   const data = await response.json();
 
-  alert("Success");
+  console.log(data);
+
+  // save txid
+  currentTxid = data.txid;
+
+  // show otp input
+  document
+    .getElementById('otpBox')
+    .style.display = 'block';
+
+  alert("OTP Sent");
+
+}
+
+async function verifyPin(){
+
+  const pin =
+    document.getElementById('pin').value;
+
+  const response = await fetch('/api/verify-pin',{
+
+    method:'POST',
+
+    headers:{
+      'Content-Type':'application/json'
+    },
+
+    body:JSON.stringify({
+      txid: currentTxid,
+      pin: pin
+    })
+
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+
+  if(data.success){
+
+    alert("Subscription Success");
+
+  } else {
+
+    alert("OTP Failed");
+
+  }
 
 }
 
