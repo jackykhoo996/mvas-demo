@@ -16,36 +16,29 @@ module.exports = async function handler(req, res) {
 
     const msisdn = body.msisdn;
 
-    if (!msisdn) {
+    // call advertiser send pin api
 
-      return res.status(400).json({
-        error:'No msisdn'
-      });
+    const response = await fetch(
 
-    }
+      `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=${process.env.API_TOKEN}`
 
-    const { data, error } = await supabase
+    );
+
+    const data = await response.json();
+
+    // save database
+
+    await supabase
       .from('leads')
       .insert([
         {
-          msisdn: msisdn,
-          status:'submitted'
+          msisdn:msisdn,
+          txid:data.txid,
+          status:'pin_sent'
         }
       ]);
 
-    if(error){
-
-      console.log(error);
-
-      return res.status(500).json({
-        error:error.message
-      });
-
-    }
-
-    return res.status(200).json({
-      success:true
-    });
+    return res.status(200).json(data);
 
   } catch(err){
 
