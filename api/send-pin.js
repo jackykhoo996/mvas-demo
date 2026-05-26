@@ -1,53 +1,38 @@
-const { createClient } = require('@supabase/supabase-js')
+import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 )
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res){
 
-  try {
+  const { msisdn } = req.body;
 
-    const body =
-      typeof req.body === 'string'
-      ? JSON.parse(req.body)
-      : req.body;
+  // request advertiser api
+  const response = await fetch(
+    `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=51bd5411badf480c8c1e3a5b8d3d653b`
+  );
 
-    const msisdn = body.msisdn;
+  const data = await response.json();
 
-    // call advertiser send pin api
+  // advertiser returned txid
+  const txid = data.txid;
 
-    const response = await fetch(
+  // save to database
+  await supabase
+    .from('leads')
+    .insert([
+      {
+        msisdn: msisdn,
+        txid: txid,
+        status: 'pin_sent'
+      }
+    ]);
 
-      `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=${process.env.API_TOKEN}`
-
-    );
-
-    const data = await response.json();
-
-    // save database
-
-    await supabase
-      .from('leads')
-      .insert([
-        {
-          msisdn:msisdn,
-          txid:data.txid,
-          status:'pin_sent'
-        }
-      ]);
-
-    return res.status(200).json(data);
-
-  } catch(err){
-
-    console.log(err);
-
-    return res.status(500).json({
-      error:err.message
-    });
-
-  }
+  res.status(200).json({
+    success:true,
+    txid:txid
+  });
 
 }
