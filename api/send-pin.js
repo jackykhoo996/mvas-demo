@@ -11,19 +11,19 @@ export default async function handler(req, res) {
 
     const { msisdn } = req.body;
 
-    // advertiser PIN API
+    // advertiser api
     const response = await fetch(
       `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=51bd5411badf480c8c1e3a5b8d3d653b`
     );
 
     const data = await response.json();
 
-    console.log(data);
+    console.log("advertiser response:", data);
 
     const txid = data.txid;
 
-    // save database
-    await supabase
+    // insert database
+    const { error } = await supabase
       .from('leads')
       .insert([
         {
@@ -33,17 +33,24 @@ export default async function handler(req, res) {
         }
       ]);
 
+    // print insert error
+    if(error){
+      console.log("SUPABASE ERROR:", error);
+    } else {
+      console.log("DATABASE INSERT SUCCESS");
+    }
+
     return res.status(200).json({
-      success: true,
-      txid: txid
+      success:true,
+      txid:txid
     });
 
-  } catch (error) {
+  } catch (err) {
 
-    console.log(error);
+    console.log("SERVER ERROR:", err);
 
     return res.status(500).json({
-      error: error.message
+      error: err.message
     });
 
   }
