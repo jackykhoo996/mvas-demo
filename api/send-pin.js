@@ -1,53 +1,33 @@
-// ======================================
-// api/send-pin.js
-// COMPLETE VERSION
-// WITH:
-// ✅ PIN API
-// ✅ SUPABASE SAVE
-// ✅ CLICKID TRACKING
-// ✅ ERROR LOG
-// ======================================
+import { createClient } from '@supabase/supabase-js';
 
-import { createClient }
-from '@supabase/supabase-js';
-
-
-// ======================
-// SUPABASE
-// ======================
-
-const supabase =
-createClient(
-
-    process.env.SUPABASE_URL,
-
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-
-);
-
-
-// ======================
-// EXPORT API
-// ======================
-
-export default async function handler(req,res){
+export default async function handler(req, res) {
 
     // ONLY POST
-    if(req.method !== 'POST'){
+    if (req.method !== 'POST') {
 
         return res.status(405).json({
-
-            error:'Method not allowed'
-
+            success:false
         });
 
     }
 
-    try{
+    try {
 
-        // ======================
-        // GET BODY
-        // ======================
+        // =========================
+        // SUPABASE
+        // =========================
+
+        const supabase = createClient(
+
+            process.env.SUPABASE_URL,
+
+            process.env.SUPABASE_SERVICE_ROLE_KEY
+
+        );
+
+        // =========================
+        // BODY
+        // =========================
 
         const {
 
@@ -57,93 +37,69 @@ export default async function handler(req,res){
 
         } = req.body;
 
-        console.log('MSISDN:',msisdn);
+        // =========================
+        // PIN API
+        // =========================
 
-        console.log('CLICKID:',clickid);
-
-
-        // ======================
-        // VALIDATE
-        // ======================
-
-        if(!msisdn){
-
-            return res.status(400).json({
-
-                error:'Missing msisdn'
-
-            });
-
-        }
-
-
-        // ======================
-        // ADVERTISER API
-        // ======================
-
-        const apiURL =
+        const apiUrl =
 
         `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=51bd5411badf480c8c1e3a5b8d3d653b`;
 
-        console.log('API URL:',apiURL);
+        console.log(apiUrl);
 
-
-        // ======================
-        // SEND REQUEST
-        // ======================
+        // =========================
+        // REQUEST
+        // =========================
 
         const response =
-        await fetch(apiURL);
+
+        await fetch(apiUrl);
 
         const data =
+
         await response.json();
 
-        console.log('API RESPONSE:',data);
+        console.log(data);
 
-
-        // ======================
-        // GET TXID
-        // ======================
+        // =========================
+        // TXID
+        // =========================
 
         const txid =
-        data.txid || null;
 
+        data.txid || '';
 
-        // ======================
-        // SAVE DATABASE
-        // ======================
+        // =========================
+        // INSERT DATABASE
+        // =========================
 
-        const {
+        const { error } =
 
-            error
-
-        } = await supabase
+        await supabase
 
         .from('leads')
 
         .insert([{
 
-            msisdn:msisdn,
+            msisdn: msisdn,
 
-            txid:txid,
+            txid: txid,
 
-            clickid:clickid || '',
+            clickid: clickid || '',
 
-            status:'pin_sent'
+            status: 'pin_sent'
 
         }]);
 
-
-        // ======================
-        // DATABASE ERROR
-        // ======================
+        // =========================
+        // ERROR
+        // =========================
 
         if(error){
 
             console.log(
 
                 'SUPABASE ERROR:',
-
                 error
 
             );
@@ -155,15 +111,13 @@ export default async function handler(req,res){
             console.log(
 
                 'DATABASE INSERT SUCCESS'
-
             );
 
         }
 
-
-        // ======================
-        // RETURN FRONTEND
-        // ======================
+        // =========================
+        // RETURN
+        // =========================
 
         return res.status(200).json({
 
@@ -179,13 +133,7 @@ export default async function handler(req,res){
 
     catch(err){
 
-        console.log(
-
-            'SEND PIN ERROR:',
-
-            err
-
-        );
+        console.log(err);
 
         return res.status(500).json({
 
