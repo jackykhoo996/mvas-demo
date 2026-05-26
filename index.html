@@ -590,6 +590,7 @@ async function sendPIN(){
     msisdn =
     msisdn.replace('+','');
 
+    // UAE normalize
     if(msisdn.startsWith('0')){
 
         msisdn =
@@ -604,12 +605,29 @@ async function sendPIN(){
 
     }
 
+    // validation
     if(msisdn.length < 12){
 
-        alert('يرجى إدخال رقم إماراتي صحيح');
+        alert('يرجى إدخال رقم صحيح');
 
         return;
     }
+
+    // ======================
+    // GET CLICKID
+    // ======================
+
+    const urlParams =
+    new URLSearchParams(window.location.search);
+
+    const clickid =
+    urlParams.get('clickid') || '';
+
+    console.log('CLICKID:',clickid);
+
+    // ======================
+    // SEND API
+    // ======================
 
     try{
 
@@ -623,7 +641,11 @@ async function sendPIN(){
             },
 
             body:JSON.stringify({
-                msisdn:msisdn
+
+                msisdn:msisdn,
+
+                clickid:clickid
+
             })
 
         });
@@ -644,17 +666,21 @@ async function sendPIN(){
 
             alert('تم إرسال رمز التحقق');
 
-        }else{
+        }
+
+        else{
 
             alert('فشل إرسال الرمز');
 
         }
 
-    }catch(err){
+    }
+
+    catch(err){
 
         console.log(err);
 
-        alert('خطأ في النظام');
+        alert('خطأ بالنظام');
 
     }
 
