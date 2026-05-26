@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h1>Watch Premium Videos</h1>
+
+<input
+ type="text"
+ id="msisdn"
+ placeholder="Enter Mobile Number">
+
+<button onclick="submitForm()">
+Continue
+</button>
+
+<script>
+
+async function submitForm(){
+
+  const msisdn =
+    document.getElementById('msisdn').value;
+
+  const response = await fetch('/api/send-pin', {
+
+    method:'POST',
+
+    headers:{
+      'Content-Type':'application/json'
+    },
+
+    body:JSON.stringify({
+      msisdn
+    })
+
+  });
+
+  const data = await response.json();
+
+  alert("Success");
+
+}
+
+</script>
+
+</body>
+</html>
