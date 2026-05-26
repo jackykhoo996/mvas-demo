@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     const { msisdn } = req.body;
 
-    // request advertiser api
+    // advertiser PIN API
     const response = await fetch(
       `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=51bd5411badf480c8c1e3a5b8d3d653b`
     );
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     const txid = data.txid;
 
-    // save to supabase
+    // save database
     await supabase
       .from('leads')
       .insert([
