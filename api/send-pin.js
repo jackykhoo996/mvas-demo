@@ -5,51 +5,42 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 )
 
-export default async function handler(req, res) {
+export default async function handler(req, res){
 
-  try {
+  try{
 
-    const { txid, pin } = req.body;
+    const { msisdn } = req.body;
 
-    // advertiser verify api
+    // advertiser api
     const response = await fetch(
-      `https://m.bolo2vas102.click/c/pin/verify?txid=${txid}&pin=${pin}&token=51bd5411badf480c8c1e3a5b8d3d653b`
+      `https://m.bolo2vas102.click/c/pin/297170/4033?msisdn=${msisdn}&token=51bd5411badf480c8c1e3a5b8d3d653b`
     );
 
     const data = await response.json();
 
     console.log(data);
 
-    // success
-    if(data.stateCode == 0){
+    // save db
+    await supabase
+      .from('leads')
+      .insert([
+        {
+          msisdn: msisdn,
+          txid: data.txid,
+          status:'pin_sent'
+        }
+      ]);
 
-      // update database
-      await supabase
-        .from('leads')
-        .update({
-          status:'verified'
-        })
-        .eq('txid', txid);
+    console.log("DATABASE INSERT SUCCESS");
 
-      return res.status(200).json({
-        success:true
-      });
+    // IMPORTANT
+    return res.status(200).json({
 
-    } else {
+      success:true,
 
-      // failed
-      await supabase
-        .from('leads')
-        .update({
-          status:'failed'
-        })
-        .eq('txid', txid);
+      txid:data.txid
 
-      return res.status(200).json({
-        success:false
-      });
-
-    }
+    });
 
   } catch(err){
 
